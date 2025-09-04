@@ -9,8 +9,11 @@ C_OBJS = \
 
 OBJS = $(C_OBJS) imports.o
 
+PSPSDK = $(shell psp-config --pspsdk-path)
+ARKSDK ?= external
+
 all: $(TARGET).prx
-INCDIR = include external/include
+INCDIR = include $(ARKSDK)/include
 CFLAGS = -std=c99 -Os -G0 -Wall
 
 ifdef DEBUG
@@ -18,7 +21,7 @@ CFLAGS += -DDEBUG=$(DEBUG)
 endif
 
 LDFLAGS =  -nostartfiles
-LIBDIR = external/libs
+LIBDIR = $(ARKSDK)/libs
 LIBS = -lpspsystemctrl_kernel
 
 PSP_FW_VERSION = 660
@@ -29,5 +32,4 @@ BUILD_PRX=1
 USE_KERNEL_LIBS=1
 USE_KERNEL_LIBC=1
 
-PSPSDK = $(shell psp-config --pspsdk-path)
 include $(PSPSDK)/lib/build.mak
