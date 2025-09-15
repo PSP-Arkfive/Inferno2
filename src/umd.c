@@ -318,7 +318,7 @@ int sceUmdMan_driver_4FFAB8DA(u32 a0, u32 a1, u32 a2)
     g_000027A0 = a2;
     g_00002798 = (void*)a1;
     
-    SceModule2* mod = (SceModule2*)sceKernelFindModuleByName("sceIsofs_driver");
+    SceModule* mod = (SceModule*)sceKernelFindModuleByName("sceIsofs_driver");
     u32 text_addr = mod->text_addr;
     u32 intr = LI_V0(0);
 
