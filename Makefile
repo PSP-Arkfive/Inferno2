@@ -1,3 +1,5 @@
+PSPSDK = $(shell psp-config --pspsdk-path)
+
 TARGET = inferno
 
 C_OBJS = \
@@ -9,11 +11,8 @@ C_OBJS = \
 
 OBJS = $(C_OBJS) imports.o
 
-PSPSDK = $(shell psp-config --pspsdk-path)
-ARKSDK ?= ../ark-dev-sdk
-
 all: $(TARGET).prx
-INCDIR = include $(ARKSDK)/include
+INCDIR = include
 CFLAGS = -std=c99 -Os -G0 -Wall
 
 ifdef DEBUG
@@ -21,7 +20,7 @@ CFLAGS += -DDEBUG=$(DEBUG)
 endif
 
 LDFLAGS =  -nostartfiles
-LIBDIR = $(ARKSDK)/libs
+LIBDIR = 
 LIBS = -lpspsystemctrl_kernel
 
 PSP_FW_VERSION = 660
