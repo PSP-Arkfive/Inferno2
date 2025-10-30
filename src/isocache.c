@@ -47,7 +47,7 @@ static SceUID cache_mem = -1;
 //#define CACHE_TEST 1
 #undef CACHE_TEST
 
-static u32 cache_policy = CACHE_POLICY_LRU;
+static u32 cache_policy = INFERNO_CACHE_DISABLED;
 
 struct ISOCacheRequest {
     u32 pos;
@@ -149,7 +149,7 @@ static void update_cache_info(void)
 {
     int i;
 
-    if(cache_policy != CACHE_POLICY_LRU)
+    if(cache_policy != INFERNO_CACHE_LRU)
         return;
 
     for(i=0; i<g_caches_num; ++i) {
@@ -173,13 +173,13 @@ static struct ISOCache *get_retirng_cache(void)
         }
     }
 
-    if(cache_policy == CACHE_POLICY_LRU) {
+    if(cache_policy == INFERNO_CACHE_LRU) {
         for(i=0; i<g_caches_num; ++i) {
             if(g_caches[i].age > g_caches[retiring].age) {
                 retiring = i;
             }
         }
-    } else if(cache_policy == CACHE_POLICY_RR) {
+    } else if(cache_policy == INFERNO_CACHE_RR) {
         retiring = sctrlKernelRand() % g_caches_num;
     }
 
@@ -436,6 +436,8 @@ int infernoCacheInit(int cache_size, int cache_num, int partition)
     }
 
     if (cache_on) return 0; // cache already on
+
+    if (cache_policy == INFERNO_CACHE_DISABLED) return -10; // cache policy not set
 
     SceUID memid;
     int i;
