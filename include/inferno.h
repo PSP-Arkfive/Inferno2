@@ -18,6 +18,8 @@
 #ifndef INFERNO_H
 #define INFERNO_H
 
+#include <infernoctrl.h>
+
 #define ISO_SECTOR_SIZE 2048
 
 #define MAX_FILES_NR 8
